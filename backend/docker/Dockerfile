@@ -5,7 +5,8 @@ ENV GOPATH=/go \
     REPO=demo-backend
 
 COPY . $HOME/src/$REPO
-RUN cd /$HOME/src/$REPO && make build
+RUN cd /$HOME/src/$REPO && make get && make build
 WORKDIR /$HOME/bin
+
 EXPOSE 8080
-CMD ./demo-backend
+CMD ./sample
