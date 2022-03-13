@@ -2,14 +2,17 @@
 
 export GO111MODULE=on
 export GOSUMDB=off
+export GONOPROXY=github.com/kailash-bhanushali/Full-Stack-Automation/backend
+export GOPROVATE=github.com/kailash-bhanushali/Full-Stack-Automation/backend
+export GONOSUMDB=github.com/kailash-bhanushali/Full-Stack-Automation/backend
 
 GO := go
 BIN_DIR := $(GOPATH)/bin
 VERSION := $(shell git describe --tags --always --dirty)
 GOFILES := $(shell find . -name '*.go' -type f -not -name '*.pb.go' -not -name '*_generated.go' -not -name '*_test.go')
-GOTESTS := $(shell find . -name '*.go' -type f -not -name '*.pb.go' -not -name '*_generated.go' -not -name '*_test.go')
+GOTESTS := $(shell find . -name '*.go' -type f -not -name '*.pb.go' -not -name '*_generated.go' -name '*_test.go')
 BUILD_FILE_NAME := sample
-MAIN_FILE_PATH := ./cmd/sample
+MAIN_FILE_PATH := ./cmd
 
 .PHONY: clean
 clean:
@@ -19,7 +22,7 @@ clean:
 get:
 	$(GO) mod download -x
 	$(GO) mod verify
-	$(GO) mod tidy
+	$(GO) mod tidy -compat=1.17
 
 .PHONY: update
 	$(GO) gte -u -v all
@@ -29,7 +32,7 @@ get:
 
 .PHONY: build
 build:
-	@env GOARCH=amd64 GOOS=linux CGO_ENABLED=1 $(GO) build -mod=vendor -o $(BIN_DIR)/$(BUILD_FILE_NAME)
+	@env GOARCH=amd64 GOOS=linux CGO_ENABLED=1 $(GO) build -o $(BIN_DIR)/$(BUILD_FILE_NAME) $(MAIN_FILE_PATH)
 
 .PHONY: test
 test:
