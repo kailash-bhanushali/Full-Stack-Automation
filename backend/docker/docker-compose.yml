@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   demo-backend:
-    image:  <image-name>
+    image:  backend
     restart: always
     environment:
       - PORT=8080

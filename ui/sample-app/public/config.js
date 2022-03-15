@@ -1,0 +1,1 @@
+window.REACT_APP_TEST="$REACT_APP_TEST"
